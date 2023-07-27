@@ -20,6 +20,22 @@ const io = new Server(server,{
 })
 
 
+io.on('connection', (socket)=>{
+
+    console.log(`user connected:${socket.id}`)
+
+    socket.on('send_message', (data)=>{
+
+        // console.log(data)
+
+        //emitting the message to every user who has connected to the server
+
+        socket.broadcast.emit('received_message', data)
+    })
+})
+
+
+
 server.listen(3002, ()=>{
 
     console.log('Server is running')
